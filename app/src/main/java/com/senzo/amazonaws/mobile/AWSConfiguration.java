@@ -6,7 +6,7 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.amazonaws.mobile;
+package com.senzo.amazonaws.mobile;
 
 import com.amazonaws.regions.Regions;
 

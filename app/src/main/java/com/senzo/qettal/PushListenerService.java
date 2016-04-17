@@ -1,4 +1,4 @@
-package com.mysampleapp;
+package com.senzo.qettal;
 
 import android.app.ActivityManager;
 import android.app.Notification;

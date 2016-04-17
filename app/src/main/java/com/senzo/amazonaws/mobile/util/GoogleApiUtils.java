@@ -1,4 +1,4 @@
-package com.amazonaws.mobile.util;
+package com.senzo.amazonaws.mobile.util;
 
 import android.content.Context;
 

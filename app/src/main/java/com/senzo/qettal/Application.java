@@ -6,13 +6,13 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.mysampleapp;
+package com.senzo.qettal;
 
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
-import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.push.PushManager;
+import com.senzo.amazonaws.mobile.AWSMobileClient;
+import com.senzo.amazonaws.mobile.push.PushManager;
 
 /**
  * Application class responsible for initializing singletons and other common components.

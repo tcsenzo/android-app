@@ -6,15 +6,13 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.mysampleapp;
+package com.senzo.qettal;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
-import com.amazonaws.mobile.AWSMobileClient;
 
 import java.util.concurrent.CountDownLatch;
 

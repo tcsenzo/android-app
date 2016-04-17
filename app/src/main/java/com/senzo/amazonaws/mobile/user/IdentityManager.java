@@ -1,4 +1,4 @@
-package com.amazonaws.mobile.user;
+package com.senzo.amazonaws.mobile.user;
 //
 // Copyright 2016 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
 //
@@ -12,10 +12,9 @@ import android.util.Log;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.SDKGlobalConfiguration;
-import com.amazonaws.auth.AWSBasicCognitoIdentityProvider;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobile.AWSConfiguration;
-import com.amazonaws.mobile.util.ThreadUtils;
+import com.senzo.amazonaws.mobile.AWSConfiguration;
+import com.senzo.amazonaws.mobile.util.ThreadUtils;
 
 import java.util.Date;
 import java.util.concurrent.ExecutorService;

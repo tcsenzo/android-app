@@ -6,7 +6,7 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.mysampleapp;
+package com.senzo.qettal;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,16 +24,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.user.IdentityManager;
-import com.mysampleapp.demo.QettalConfiguration;
-import com.mysampleapp.demo.HomeFragment;
+import com.senzo.amazonaws.mobile.AWSMobileClient;
+import com.senzo.amazonaws.mobile.user.IdentityManager;
+
 import android.app.AlertDialog;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.mysampleapp.navigation.NavigationDrawer;
+import com.senzo.qettal.navigation.NavigationDrawer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     /** Class name for log messages. */

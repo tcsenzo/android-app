@@ -1,4 +1,4 @@
-package com.amazonaws.mobile.util;
+package com.senzo.amazonaws.mobile.util;
 
 public final class StringFormatUtils {
 

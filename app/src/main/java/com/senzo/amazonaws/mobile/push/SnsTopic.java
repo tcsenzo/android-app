@@ -1,4 +1,4 @@
-package com.amazonaws.mobile.push;
+package com.senzo.amazonaws.mobile.push;
 
 /**
  * A simple class represents an SNS topic and its subscription status.

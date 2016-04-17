@@ -6,7 +6,7 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.amazonaws.mobile.push;
+package com.senzo.amazonaws.mobile.push;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +24,7 @@ import com.amazonaws.services.sns.model.SetEndpointAttributesRequest;
 import com.amazonaws.services.sns.model.SubscribeRequest;
 import com.amazonaws.services.sns.model.SubscribeResult;
 import com.amazonaws.services.sns.model.UnsubscribeRequest;
-import com.amazonaws.mobile.util.ThreadUtils;
+import com.senzo.amazonaws.mobile.util.ThreadUtils;
 
 import java.util.Collections;
 import java.util.HashMap;

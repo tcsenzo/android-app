@@ -1,4 +1,4 @@
-package com.mysampleapp.navigation;
+package com.senzo.qettal.navigation;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,11 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.mysampleapp.R;
-import com.mysampleapp.demo.QettalConfiguration;
-import com.mysampleapp.demo.HomeFragment;
-
-import static com.mysampleapp.R.string.app_name;
+import com.senzo.qettal.QettalConfiguration;
+import com.senzo.qettal.HomeFragment;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;
@@ -52,17 +49,17 @@ public class NavigationDrawer {
         // Keep a reference to the activity containing this navigation drawer.
         this.containingActivity = activity;
         this.drawerItems = drawerItemsContainer;
-        adapter = new ArrayAdapter<QettalConfiguration.QettalFeature>(activity, R.layout.nav_drawer_item) {
+        adapter = new ArrayAdapter<QettalConfiguration.QettalFeature>(activity, com.senzo.qettal.R.layout.nav_drawer_item) {
             @Override
             public View getView(final int position, final View convertView,
                                 final ViewGroup parent) {
                 View view = convertView;
                 if (view == null) {
-                    view = activity.getLayoutInflater().inflate(R.layout.nav_drawer_item, parent, false);
+                    view = activity.getLayoutInflater().inflate(com.senzo.qettal.R.layout.nav_drawer_item, parent, false);
                 }
                 final QettalConfiguration.QettalFeature item = getItem(position);
-                ((ImageView) view.findViewById(R.id.drawer_item_icon)).setImageResource(item.iconResId);
-                ((TextView) view.findViewById(R.id.drawer_item_text)).setText(item.titleResId);
+                ((ImageView) view.findViewById(com.senzo.qettal.R.id.drawer_item_icon)).setImageResource(item.iconResId);
+                ((TextView) view.findViewById(com.senzo.qettal.R.id.drawer_item_text)).setText(item.titleResId);
                 return view;
             }
         };
@@ -89,7 +86,7 @@ public class NavigationDrawer {
                 // Set the title for the fragment.
                 final ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null) {
-                    actionBar.setTitle(position == 0 ? R.string.app_name : item.titleResId);
+                    actionBar.setTitle(position == 0 ? com.senzo.qettal.R.string.app_name : item.titleResId);
                 }
                 closeDrawer();
             }
@@ -99,7 +96,7 @@ public class NavigationDrawer {
 
         // Create the navigation drawer toggle helper.
         drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,
-            app_name, app_name) {
+            com.senzo.qettal.R.string.app_name, com.senzo.qettal.R.string.app_name) {
         };
 
         // Set the listener to allow a swipe from the screen edge to bring up the navigation drawer.
@@ -125,7 +122,7 @@ public class NavigationDrawer {
 
         // Set the title for the fragment.
         final ActionBar actionBar = containingActivity.getSupportActionBar();
-        actionBar.setTitle(R.string.app_name);
+        actionBar.setTitle(com.senzo.qettal.R.string.app_name);
         closeDrawer();
     }
 

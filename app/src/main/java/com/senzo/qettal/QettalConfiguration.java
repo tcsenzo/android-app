@@ -1,11 +1,8 @@
-package com.mysampleapp.demo;
+package com.senzo.qettal;
 
 import android.support.v4.app.Fragment;
 
-import com.mysampleapp.R;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.amazonaws.mobile.push;
+package com.senzo.amazonaws.mobile.push;
 
 
 import android.content.Context;

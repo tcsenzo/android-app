@@ -6,16 +6,16 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.6
 //
-package com.amazonaws.mobile;
+package com.senzo.amazonaws.mobile;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.amazonaws.ClientConfiguration;
-import com.amazonaws.mobile.user.IdentityManager;
+import com.senzo.amazonaws.mobile.user.IdentityManager;
 
-import com.amazonaws.mobile.push.PushManager;
-import com.amazonaws.mobile.push.GCMTokenHelper;
+import com.senzo.amazonaws.mobile.push.PushManager;
+import com.senzo.amazonaws.mobile.push.GCMTokenHelper;
 import com.amazonaws.regions.Regions;
 
 /**
