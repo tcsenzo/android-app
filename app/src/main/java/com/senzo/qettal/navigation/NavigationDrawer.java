@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.senzo.qettal.QettalConfiguration;
-import com.senzo.qettal.HomeFragment;
+import com.senzo.qettal.EventsListFragment;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;
@@ -112,11 +112,11 @@ public class NavigationDrawer {
     }
 
     public void showHome() {
-        final Fragment fragment = new HomeFragment();
+        final Fragment fragment = new EventsListFragment();
 
         containingActivity.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(fragmentContainerId, fragment, HomeFragment.class.getSimpleName())
+                .replace(fragmentContainerId, fragment, EventsListFragment.class.getSimpleName())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
 

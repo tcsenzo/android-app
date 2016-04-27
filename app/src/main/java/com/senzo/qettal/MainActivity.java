@@ -177,9 +177,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         final FragmentManager fragmentManager = this.getSupportFragmentManager();
-        if (fragmentManager.findFragmentByTag(HomeFragment.class.getSimpleName()) == null) {
-            final Class fragmentClass = HomeFragment.class;
-            // if we aren't on the home fragment, navigate home.
+        if (fragmentManager.findFragmentByTag(EventsListFragment.class.getSimpleName()) == null) {
+            final Class fragmentClass = EventsListFragment.class;
             final Fragment fragment = Fragment.instantiate(this, fragmentClass.getName());
 
             fragmentManager
@@ -188,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
 
-            // Set the title for the fragment.
             final ActionBar actionBar = this.getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setTitle(getString(R.string.app_name));

@@ -13,7 +13,7 @@ public class QettalConfiguration {
     static {
         addFeature("list_spetacles", R.mipmap.icon_home, R.string.main_nav_menu_item_home,
                 R.string.main_menu_home_subtitle, R.string.main_menu_home_overview,
-                R.string.main_menu_home_description, R.string.main_menu_home_powered_by, new HomeFragment());
+                R.string.main_menu_home_description, R.string.main_menu_home_powered_by, new EventsListFragment());
     }
 
     public static List<QettalFeature> getFeatureList() {
