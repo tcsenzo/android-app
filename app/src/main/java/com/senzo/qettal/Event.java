@@ -19,19 +19,6 @@ public class Event {
     @JsonProperty("scheduled_date")
     private String scheduledDate;
 
-    /**
-     * @deprecated Jackson eyes only
-     */
-    Event() {
-    }
-
-    public Event(String name, String description, String price, String scheduledDate) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.scheduledDate = scheduledDate;
-    }
-
     @Override
     public String toString() {
         return "Nome: '" + name + '\'' +

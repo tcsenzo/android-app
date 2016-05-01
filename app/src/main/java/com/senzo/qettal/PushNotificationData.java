@@ -4,16 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.List;
-
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EventList {
+public class PushNotificationData {
 
-    @JsonProperty("events")
-    private List<Event> events;
+    @JsonProperty
+    private String title;
+    @JsonProperty
+    private String message;
 
-    public List<Event> getEvents() {
-        return events;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

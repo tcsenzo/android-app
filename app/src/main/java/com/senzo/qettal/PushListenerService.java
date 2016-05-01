@@ -11,44 +11,40 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.gcm.GcmListenerService;
 
+import java.io.IOException;
 import java.util.List;
 
-/**
- * A service that listens to GCM notifications.
- */
 public class PushListenerService extends GcmListenerService {
 
     private static final String LOG_TAG = PushListenerService.class.getSimpleName();
 
-    // Intent action used in local broadcast
     public static final String ACTION_SNS_NOTIFICATION = "sns-notification";
-    // Intent keys
     public static final String INTENT_SNS_NOTIFICATION_FROM = "from";
     public static final String INTENT_SNS_NOTIFICATION_DATA = "data";
 
-    /**
-     * Helper method to extract SNS message from bundle.
-     *
-     * @param data bundle
-     * @return message string from SNS push notification
-     */
-    public static String getMessage(Bundle data) {
-        // If a push notification is sent as plain text, then the message appears in "default".
-        // Otherwise it's in the "message" for JSON format.
-        return data.containsKey("default") ? data.getString("default") : data.getString(
-            "message", "");
+    @Override
+    public void onMessageReceived(final String from, final Bundle bundle) {
+        Log.d(LOG_TAG, "Received a push notification with data: " + bundle + " from: "+ from);
+        try {
+            String defaultData = bundle.getString("default");
+            if (isForeground(this)) {
+                broadcast(from, defaultData);
+            } else {
+                PushNotificationData data = new ObjectMapper().readValue(defaultData, PushNotificationData.class);
+                displayNotification(data);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Couldn't display push notification", e);
+        }
     }
 
     private static boolean isForeground(Context context) {
-        // Gets a list of running processes.
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> tasks = am.getRunningAppProcesses();
 
-        // On some versions of android the first item in the list is what runs in the foreground,
-        // but this is not true on all versions.  Check the process importance to see if the app
-        // is in the foreground.
         final String packageName = context.getPackageName();
         for (ActivityManager.RunningAppProcessInfo appProcess : tasks) {
             if (ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND == appProcess.importance
@@ -59,21 +55,18 @@ public class PushListenerService extends GcmListenerService {
         return false;
     }
 
-    private void displayNotification(final String message) {
+    private void displayNotification(final PushNotificationData data) {
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        // notificationIntent.setFlags(
-        //        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         int requestID = (int) System.currentTimeMillis();
+
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent,
             PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Display a notification with an icon, message as content, and default sound. It also
-        // opens the app when the notification is clicked.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(
                 R.mipmap.push)
-                .setContentTitle("algum titulo aqui")
-                .setContentText(message)
+                .setContentTitle(data.getTitle())
+                .setContentText(data.getMessage())
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)
                 .setContentIntent(contentIntent);
@@ -84,32 +77,11 @@ public class PushListenerService extends GcmListenerService {
         notificationManager.notify(0, builder.build());
     }
 
-    private void broadcast(final String from, final Bundle data) {
+    private void broadcast(final String from, final String data) {
         Intent intent = new Intent(ACTION_SNS_NOTIFICATION);
         intent.putExtra(INTENT_SNS_NOTIFICATION_FROM, from);
         intent.putExtra(INTENT_SNS_NOTIFICATION_DATA, data);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    /**
-     * Called when message is received.
-     *
-     * @param from SenderID of the sender.
-     * @param data Data bundle containing message data as key/value pairs. For Set of keys use
-     * data.keySet().
-     */
-    @Override
-    public void onMessageReceived(final String from, final Bundle data) {
-        String message = getMessage(data);
-        Log.d(LOG_TAG, "From: " + from);
-        Log.d(LOG_TAG, "Message: " + message);
-        // Display a notification in the notification center if the app is in the background.
-        // Otherwise, send a local broadcast to the app and let the app handle it.
-        if (isForeground(this)) {
-            // broadcast notification
-            broadcast(from, data);
-        } else {
-            displayNotification(message);
-        }
-    }
 }
