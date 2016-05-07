@@ -19,7 +19,7 @@ public class Event {
     @JsonProperty("scheduled_date")
     private String scheduledDate;
 
-    @Override
+        @Override
     public String toString() {
         return "Nome: '" + name + '\'' +
                 ", Descricao: '" + description + '\'' +

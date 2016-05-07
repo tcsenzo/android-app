@@ -23,7 +23,7 @@ public class AWSConfiguration {
     public static final Regions AMAZON_COGNITO_REGION =
         Regions.US_EAST_1;
     public static final String  AMAZON_COGNITO_IDENTITY_POOL_ID =
-        "us-east-1:97157599-7e9b-4a7a-92ab-aee5ffd3f733";
+        "us-east-1:07383017-1546-43ae-b360-101bb391f2ce";
     // GOOGLE CLOUD MESSAGING API KEY
     public static final String GOOGLE_CLOUD_MESSAGING_API_KEY =
         "AIzaSyBcs1vFxHBEcdrLwp4C3NHwx4lLP5IwxY4";
@@ -33,10 +33,10 @@ public class AWSConfiguration {
 
     // SNS PLATFORM APPLICATION ARN
     public static final String AMAZON_SNS_PLATFORM_APPLICATION_ARN =
-        "arn:aws:sns:us-east-1:417703597935:app/GCM/qettal_MOBILEHUB_1994879436";
+        "arn:aws:sns:us-east-1:977107734260:app/GCM/qettal-android";
     // SNS DEFAULT TOPIC ARN
     public static final String AMAZON_SNS_DEFAULT_TOPIC_ARN =
-        "arn:aws:sns:us-east-1:417703597935:qettal_alldevices_MOBILEHUB_1994879436";
+        "arn:aws:sns:us-east-1:977107734260:qettal-all-devices";
     // SNS PLATFORM TOPIC ARNS
     public static final String[] AMAZON_SNS_TOPIC_ARNS =
         {};
