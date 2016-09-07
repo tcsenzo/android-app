@@ -1,4 +1,4 @@
-package com.senzo.qettal;
+package com.senzo.qettal.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

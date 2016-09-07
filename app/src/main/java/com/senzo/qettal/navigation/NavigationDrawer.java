@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.senzo.qettal.QettalConfiguration;
-import com.senzo.qettal.EventsListFragment;
+import com.senzo.qettal.events.EventsListFragment;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;

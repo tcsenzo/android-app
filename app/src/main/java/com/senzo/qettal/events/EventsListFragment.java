@@ -1,14 +1,14 @@
-package com.senzo.qettal;
+package com.senzo.qettal.events;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.senzo.qettal.R;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -36,12 +36,13 @@ public class EventsListFragment extends Fragment {
         protected EventList doInBackground(Void... params) {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            return restTemplate.getForObject("http://10.0.2.2:8080/events", EventList.class);
+            EventList list = restTemplate.getForObject("http://10.0.2.2:8080/events", EventList.class);
+            return list;
         }
 
         @Override
         protected void onPostExecute(EventList eventList) {
-            ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(getActivity(), android.R.layout.simple_list_item_1, eventList.getEvents().toArray(new Event[]{}));
+            EventsAdapter adapter = new EventsAdapter(getActivity(), eventList.getEvents());
             eventsList.setAdapter(adapter);
         }
 

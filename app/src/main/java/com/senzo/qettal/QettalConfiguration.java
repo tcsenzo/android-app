@@ -2,6 +2,8 @@ package com.senzo.qettal;
 
 import android.support.v4.app.Fragment;
 
+import com.senzo.qettal.events.EventsListFragment;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,11 +48,6 @@ public class QettalConfiguration {
         public int descriptionResId;
         public int poweredByResId;
         private Fragment fragment;
-        public List<DemoItem> demos;
-
-        public QettalFeature() {
-
-        }
 
         public QettalFeature(final String name, final int iconResId, final int titleResId,
                              final int subtitleResId, final int overviewResId,
@@ -70,18 +67,4 @@ public class QettalConfiguration {
         }
     }
 
-    public static class DemoItem {
-        public int titleResId;
-        public int iconResId;
-        public int buttonTextResId;
-        public String fragmentClassName;
-
-        public DemoItem(final int titleResId, final int iconResId, final int buttonTextResId,
-                        final Class<? extends Fragment> fragmentClass) {
-            this.titleResId = titleResId;
-            this.iconResId = iconResId;
-            this.buttonTextResId = buttonTextResId;
-            this.fragmentClassName = fragmentClass.getName();
-        }
-    }
 }

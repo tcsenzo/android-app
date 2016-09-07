@@ -19,12 +19,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.senzo.amazonaws.mobile.AWSMobileClient;
 import com.senzo.amazonaws.mobile.user.IdentityManager;
 
@@ -33,6 +36,7 @@ import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.senzo.qettal.events.EventsListFragment;
 import com.senzo.qettal.navigation.NavigationDrawer;
 
 import java.io.IOException;
@@ -44,6 +48,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private NavigationDrawer navigationDrawer;
     private ActionBarDrawerToggle drawerToggle;
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
+
+        return super.onCreateView(name, context, attrs);
+    }
 
     private void setupToolbar(final Bundle savedInstanceState) {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
