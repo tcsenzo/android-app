@@ -36,7 +36,7 @@ public class EventsListFragment extends Fragment {
         protected EventList doInBackground(Void... params) {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            EventList list = restTemplate.getForObject("http://10.0.2.2:8080/events", EventList.class);
+            EventList list = restTemplate.getForObject("http://events.qettal.com/events", EventList.class);
             return list;
         }
 

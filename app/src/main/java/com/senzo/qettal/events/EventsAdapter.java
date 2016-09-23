@@ -51,7 +51,7 @@ public class EventsAdapter extends BaseAdapter {
         name.setText(event.getName());
 
         TextView description = (TextView) view.findViewById(R.id.description);
-        name.setText(event.getDescription());
+        description.setText(event.getDescription());
 
         TextView originalPrice = (TextView) view.findViewById(R.id.original_price);
         originalPrice.setText(event.getOriginalPrice());
