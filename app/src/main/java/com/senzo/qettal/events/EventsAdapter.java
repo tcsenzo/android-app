@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.senzo.qettal.R;
 
@@ -45,22 +46,23 @@ public class EventsAdapter extends BaseAdapter {
 
         ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
         ImageView image = (ImageView) view.findViewById(R.id.image);
-        imageLoader.displayImage(event.getImage(), image);
+        imageLoader.displayImage(event.getImage(), image, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build());
 
         TextView name = (TextView) view.findViewById(R.id.name);
         name.setText(event.getName());
 
-        TextView description = (TextView) view.findViewById(R.id.description);
-        description.setText(event.getDescription());
-
         TextView originalPrice = (TextView) view.findViewById(R.id.original_price);
-        originalPrice.setText(event.getOriginalPrice());
+        originalPrice.setText(format(event.getOriginalPrice()));
         originalPrice.setPaintFlags(originalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         TextView price = (TextView) view.findViewById(R.id.price);
-        price.setText(event.getPrice());
+        price.setText(format(event.getPrice()));
 
         return view;
+    }
+
+    private String format(String price) {
+        return "R$ "+price.replace(".", ",");
     }
 }
 
