@@ -46,7 +46,7 @@ public class EventsAdapter extends BaseAdapter {
 
         ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
         ImageView image = (ImageView) view.findViewById(R.id.image);
-        imageLoader.displayImage(event.getImage(), image, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build());
+        imageLoader.displayImage(event.getImage()+"?i="+position, image, new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build());
 
         TextView name = (TextView) view.findViewById(R.id.name);
         name.setText(event.getName());
