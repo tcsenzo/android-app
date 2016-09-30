@@ -13,9 +13,13 @@ public class QettalConfiguration {
     private static final List<QettalFeature> featureList = new ArrayList<QettalFeature>();
 
     static {
-        addFeature("list_spetacles", R.mipmap.icon_home, R.string.main_nav_menu_item_home,
+        addFeature("home", R.mipmap.icon_home, R.string.main_nav_menu_item_home,
                 R.string.main_menu_home_subtitle, R.string.main_menu_home_overview,
                 R.string.main_menu_home_description, R.string.main_menu_home_powered_by, new EventsListFragment());
+
+        addFeature("login", R.mipmap.icon_login, R.string.main_nav_menu_item_login,
+                R.string.main_nav_menu_item_login, R.string.main_nav_menu_item_login,
+                R.string.main_nav_menu_item_login, R.string.main_nav_menu_item_login, new LoginFragment());
     }
 
     public static List<QettalFeature> getFeatureList() {
