@@ -30,4 +30,10 @@ public class QettalModule {
         CookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), cookiePersistor);
         return new OkHttpClient.Builder().cookieJar(cookieJar).build();
     }
+
+    @Provides
+    @Singleton
+    QettalConfiguration getConfig(){
+        return new QettalConfiguration();
+    }
 }

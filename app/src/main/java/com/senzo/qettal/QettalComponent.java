@@ -17,4 +17,8 @@ public interface QettalComponent {
     void inject(EventFragment eventFragment);
 
     void inject(QettalCookieManager cookieManager);
+
+    void inject(MainActivity mainActivity);
+
+    void inject(QettalConfiguration qettalConfiguration);
 }

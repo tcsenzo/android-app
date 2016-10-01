@@ -3,7 +3,6 @@ package com.senzo.qettal.navigation;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.senzo.qettal.QettalConfiguration;
 import com.senzo.qettal.R;
-import com.senzo.qettal.events.EventsListFragment;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;
@@ -44,7 +42,6 @@ public class NavigationDrawer {
                             final DrawerLayout layout,
                             final ListView drawerItemsContainer,
                             final int fragmentContainerId) {
-        // Keep a reference to the activity containing this navigation drawer.
         this.containingActivity = activity;
         this.drawerItems = drawerItemsContainer;
         adapter = new ArrayAdapter<QettalConfiguration.QettalFeature>(activity, com.senzo.qettal.R.layout.nav_drawer_item) {
@@ -56,8 +53,8 @@ public class NavigationDrawer {
                     view = activity.getLayoutInflater().inflate(com.senzo.qettal.R.layout.nav_drawer_item, parent, false);
                 }
                 final QettalConfiguration.QettalFeature item = getItem(position);
-                ((ImageView) view.findViewById(com.senzo.qettal.R.id.drawer_item_icon)).setImageResource(item.iconResId);
-                ((TextView) view.findViewById(com.senzo.qettal.R.id.drawer_item_text)).setText(item.titleResId);
+                ((ImageView) view.findViewById(com.senzo.qettal.R.id.drawer_item_icon)).setImageResource(item.getIconResId());
+                ((TextView) view.findViewById(com.senzo.qettal.R.id.drawer_item_text)).setText(item.getTitleResId());
                 return view;
             }
         };
@@ -71,7 +68,7 @@ public class NavigationDrawer {
 
                 activity.getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(fragmentContainerId, fragment, item.name)
+                        .replace(fragmentContainerId, fragment, item.getName())
                         .addToBackStack(null)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
@@ -81,21 +78,22 @@ public class NavigationDrawer {
         this.drawerLayout = layout;
         this.fragmentContainerId = fragmentContainerId;
 ;
-
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,
                 R.string.app_name, R.string.app_name) {};
         drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        for (QettalConfiguration.QettalFeature demoFeature : QettalConfiguration.getFeatureList()) {
-            adapter.add(demoFeature);
-            adapter.notifyDataSetChanged();
-        }
+    }
+
+    public void replaceFeatures(QettalConfiguration qettalConfiguration){
+        adapter.clear();
+        adapter.addAll(qettalConfiguration.getFeatures());
+        adapter.notifyDataSetChanged();
     }
 
     public void showHome() {
         containingActivity.getSupportFragmentManager().beginTransaction()
-                .replace(fragmentContainerId, adapter.getItem(0).getFragment(), adapter.getItem(0).name)
+                .replace(fragmentContainerId, adapter.getItem(0).getFragment(), adapter.getItem(0).getName())
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
     }

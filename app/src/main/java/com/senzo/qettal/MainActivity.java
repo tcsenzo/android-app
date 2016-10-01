@@ -29,51 +29,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.senzo.amazonaws.mobile.AWSMobileClient;
-import com.senzo.amazonaws.mobile.user.IdentityManager;
 import com.senzo.qettal.navigation.NavigationDrawer;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
-    private final static String BUNDLE_KEY_TOOLBAR_TITLE = "title";
-    private IdentityManager identityManager;
-    private Toolbar toolbar;
     private NavigationDrawer navigationDrawer;
+    @Inject
+    QettalConfiguration config;
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-
         return super.onCreateView(name, context, attrs);
-    }
-
-    private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.app_name);
-        }
-    }
-
-    private void setupNavigationMenu() {
-        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final ListView drawerItems = (ListView) findViewById(R.id.nav_drawer_items);
-
-        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems, R.id.main_fragment_container);
     }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Application.getComponent().inject(this);
 
         AWSMobileClient.initializeMobileClientIfNecessary(this);
-        final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
-        identityManager = awsMobileClient.getIdentityManager();
         setContentView(R.layout.activity_main);
-        setupToolbar();
         setupNavigationMenu();
 
         if (savedInstanceState == null) {
@@ -85,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
-        final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
         LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver,
                 new IntentFilter(PushListenerService.ACTION_SNS_NOTIFICATION));
 
@@ -129,4 +109,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver);
     }
 
+    private void setupNavigationMenu() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ListView drawerItems = (ListView) findViewById(R.id.nav_drawer_items);
+
+        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems, R.id.main_fragment_container);
+        navigationDrawer.replaceFeatures(config);
+    }
+
+    public NavigationDrawer getNavigation() {
+        return navigationDrawer;
+    }
 }

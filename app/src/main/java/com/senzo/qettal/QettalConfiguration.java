@@ -15,26 +15,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class QettalConfiguration {
 
-    private static final List<QettalFeature> featureList = new ArrayList<QettalFeature>();
+    private final List<QettalFeature> unloggedFeatures = new ArrayList<>();
+    private List<QettalFeature> loggedFeatures = new ArrayList<>();
 
-    static {
-        addFeature("home", R.mipmap.icon_home, R.string.main_nav_menu_item_home,
-                R.string.main_menu_home_subtitle, R.string.main_menu_home_overview,
-                R.string.main_menu_home_description, R.string.main_menu_home_powered_by, new EventsListFragment());
+    @Inject
+    QettalCookieManager cookies;;
 
-        addFeature("login", R.mipmap.icon_login, R.string.main_nav_menu_item_login,
-                R.string.main_nav_menu_item_login, R.string.main_nav_menu_item_login,
-                R.string.main_nav_menu_item_login, R.string.main_nav_menu_item_login, new LoginFragment());
+    public QettalConfiguration() {
+        Application.getComponent().inject(this);
+
+        QettalFeature homeFeature = new QettalFeature("home", R.mipmap.icon_home, R.string.main_nav_menu_item_home, new EventsListFragment());
+        unloggedFeatures.add(homeFeature);
+        unloggedFeatures.add(new QettalFeature("login", R.mipmap.icon_login, R.string.main_nav_menu_item_login, new LoginFragment()));
+        loggedFeatures.add(homeFeature);
     }
 
-    public static List<QettalFeature> getFeatureList() {
-        return Collections.unmodifiableList(featureList);
+    public List<QettalFeature> getFeatures() {
+        if(cookies.getJSessionId() == null){
+            return Collections.unmodifiableList(unloggedFeatures);    
+        }
+        return Collections.unmodifiableList(loggedFeatures);
     }
 
-    public static QettalFeature getFeatureByName(final String name) {
-        for (QettalFeature feature : featureList) {
+    public QettalFeature getFeatureByName(final String name) {
+        for (QettalFeature feature : unloggedFeatures) {
             if (feature.name.equals(name)) {
                 return feature;
             }
@@ -42,39 +50,34 @@ public class QettalConfiguration {
         return null;
     }
 
-    private static void addFeature(final String name, final int iconResId, final int titleResId,
-                                   final int subtitleResId, final int overviewResId,
-                                   final int descriptionResId, final int poweredByResId, Fragment fragment) {
-        QettalFeature demoFeature = new QettalFeature(name, iconResId, titleResId, subtitleResId,
-                overviewResId, descriptionResId, poweredByResId, fragment);
-        featureList.add(demoFeature);
-    }
 
-    public static class QettalFeature {
-        public String name;
-        public int iconResId;
-        public int titleResId;
-        public int subtitleResId;
-        public int overviewResId;
-        public int descriptionResId;
-        public int poweredByResId;
+    public class QettalFeature {
+        private String name;
+        private int iconResId;
+        private int titleResId;
         private Fragment fragment;
 
-        public QettalFeature(final String name, final int iconResId, final int titleResId,
-                             final int subtitleResId, final int overviewResId,
-                             final int descriptionResId, final int poweredByResId, Fragment fragment) {
+        public QettalFeature(final String name, final int iconResId, final int titleResId, Fragment fragment) {
             this.name = name;
             this.iconResId = iconResId;
             this.titleResId = titleResId;
-            this.subtitleResId = subtitleResId;
-            this.overviewResId = overviewResId;
-            this.descriptionResId = descriptionResId;
-            this.poweredByResId = poweredByResId;
             this.fragment = fragment;
         }
 
         public Fragment getFragment(){
             return fragment;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getIconResId() {
+            return iconResId;
+        }
+
+        public int getTitleResId() {
+            return titleResId;
         }
     }
 

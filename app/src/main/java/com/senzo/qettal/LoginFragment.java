@@ -35,6 +35,8 @@ public class LoginFragment extends Fragment {
     AVLoadingIndicatorView avi;
     @Inject
     OkHttpClient client;
+    @Inject
+    QettalConfiguration qettalConfiguration;
 
     @Nullable
     @Override
@@ -63,6 +65,7 @@ public class LoginFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 avi.hide();
                 getFragmentManager().popBackStack();
+                ((MainActivity) getActivity()).getNavigation().replaceFeatures(qettalConfiguration);
             }
 
             @Override
