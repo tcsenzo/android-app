@@ -44,7 +44,10 @@ public class EventFragment extends Fragment {
                 return true;
             }
         });
+
+
         eventWebView.loadUrl("http://www.qettal.com/evento/"+ eventId);
         return view;
     }
+
 }

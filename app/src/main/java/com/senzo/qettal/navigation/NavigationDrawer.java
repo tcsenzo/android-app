@@ -16,13 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.senzo.qettal.QettalConfiguration;
+import com.senzo.qettal.R;
 import com.senzo.qettal.events.EventsListFragment;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;
-
-    /** The helper class used to toggle the left navigation drawer open and closed. */
-    private ActionBarDrawerToggle drawerToggle;
 
     /* The navigation drawer layout view control. */
     private DrawerLayout drawerLayout;
@@ -68,73 +66,37 @@ public class NavigationDrawer {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {
-                if (position == 0) {
-                    // home
-                    showHome();
-                    return;
-                }
-
                 QettalConfiguration.QettalFeature item = adapter.getItem(position);
                 final Fragment fragment = item.getFragment();
 
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(fragmentContainerId, fragment, item.name)
+                        .addToBackStack(null)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
-
-                // Set the title for the fragment.
-                final ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle(position == 0 ? com.senzo.qettal.R.string.app_name : item.titleResId);
-                }
-                closeDrawer();
-            }
+                drawerLayout.closeDrawers();
+        }
         });
         this.drawerLayout = layout;
         this.fragmentContainerId = fragmentContainerId;
+;
 
-        // Create the navigation drawer toggle helper.
-        drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,
-            com.senzo.qettal.R.string.app_name, com.senzo.qettal.R.string.app_name) {
-        };
-
-        // Set the listener to allow a swipe from the screen edge to bring up the navigation drawer.
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,
+                R.string.app_name, R.string.app_name) {};
         drawerLayout.setDrawerListener(drawerToggle);
-
-        // Display the home button on the toolbar that will open the navigation drawer.
-        final ActionBar supportActionBar = containingActivity.getSupportActionBar();
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setHomeButtonEnabled(true);
-
-        // Switch to display the hamburger icon for the home button.
         drawerToggle.syncState();
+
+        for (QettalConfiguration.QettalFeature demoFeature : QettalConfiguration.getFeatureList()) {
+            adapter.add(demoFeature);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void showHome() {
-        final Fragment fragment = new EventsListFragment();
-
-        containingActivity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(fragmentContainerId, fragment, EventsListFragment.class.getSimpleName())
+        containingActivity.getSupportFragmentManager().beginTransaction()
+                .replace(fragmentContainerId, adapter.getItem(0).getFragment(), adapter.getItem(0).name)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
-
-        // Set the title for the fragment.
-        final ActionBar actionBar = containingActivity.getSupportActionBar();
-        actionBar.setTitle(com.senzo.qettal.R.string.app_name);
-        closeDrawer();
-    }
-
-    public void addFeatureToMenu(QettalConfiguration.QettalFeature demoFeature) {
-        adapter.add(demoFeature);
-        adapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Closes the navigation drawer.
-     */
-    public void closeDrawer() {
-        drawerLayout.closeDrawers();
     }
 }

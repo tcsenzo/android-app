@@ -8,15 +8,18 @@
 //
 package com.senzo.qettal;
 
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
@@ -30,12 +33,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.senzo.amazonaws.mobile.AWSMobileClient;
 import com.senzo.amazonaws.mobile.user.IdentityManager;
-
-import android.app.AlertDialog;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
-import android.support.v4.content.LocalBroadcastManager;
-
 import com.senzo.qettal.events.EventsListFragment;
 import com.senzo.qettal.navigation.NavigationDrawer;
 
@@ -47,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private IdentityManager identityManager;
     private Toolbar toolbar;
     private NavigationDrawer navigationDrawer;
-    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -56,32 +52,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onCreateView(name, context, attrs);
     }
 
-    private void setupToolbar(final Bundle savedInstanceState) {
+    private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (savedInstanceState != null) {
-            assert getSupportActionBar() != null;
-
-            getSupportActionBar().setTitle(
-                    savedInstanceState.getCharSequence(BUNDLE_KEY_TOOLBAR_TITLE));
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.app_name);
         }
     }
 
-    private void setupNavigationMenu(final Bundle savedInstanceState) {
+    private void setupNavigationMenu() {
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ListView drawerItems = (ListView) findViewById(R.id.nav_drawer_items);
 
-        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems,
-                R.id.main_fragment_container);
-
-        for (QettalConfiguration.QettalFeature demoFeature : QettalConfiguration.getFeatureList()) {
-            navigationDrawer.addFeatureToMenu(demoFeature);
-        }
-
-        if (savedInstanceState == null) {
-            navigationDrawer.showHome();
-        }
+        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems, R.id.main_fragment_container);
     }
 
     @Override
@@ -92,8 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
         identityManager = awsMobileClient.getIdentityManager();
         setContentView(R.layout.activity_main);
-        setupToolbar(savedInstanceState);
-        setupNavigationMenu(savedInstanceState);
+        setupToolbar();
+        setupNavigationMenu();
+
+        if (savedInstanceState == null) {
+            navigationDrawer.showHome();
+        }
+
     }
 
     @Override
@@ -103,20 +93,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
         LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver,
                 new IntentFilter(PushListenerService.ACTION_SNS_NOTIFICATION));
+
+        final ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.app_name));
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onSaveInstanceState(final Bundle bundle) {
-        super.onSaveInstanceState(bundle);
-
-        if (toolbar != null) {
-            bundle.putCharSequence(BUNDLE_KEY_TOOLBAR_TITLE, toolbar.getTitle());
-        }
     }
 
     @Override
@@ -147,25 +133,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver);
     }
 
-    @Override
-    public void onBackPressed() {
-        final FragmentManager fragmentManager = this.getSupportFragmentManager();
-        if (fragmentManager.findFragmentByTag(EventsListFragment.class.getSimpleName()) == null) {
-            final Class fragmentClass = EventsListFragment.class;
-            final Fragment fragment = Fragment.instantiate(this, fragmentClass.getName());
-
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.main_fragment_container, fragment, fragmentClass.getSimpleName())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit();
-
-            final ActionBar actionBar = this.getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(getString(R.string.app_name));
-            }
-            return;
-        }
-        super.onBackPressed();
-    }
 }
