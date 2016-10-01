@@ -14,9 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -33,7 +30,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.senzo.amazonaws.mobile.AWSMobileClient;
 import com.senzo.amazonaws.mobile.user.IdentityManager;
-import com.senzo.qettal.events.EventsListFragment;
 import com.senzo.qettal.navigation.NavigationDrawer;
 
 import java.io.IOException;

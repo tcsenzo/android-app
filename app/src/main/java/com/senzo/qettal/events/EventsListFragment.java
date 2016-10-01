@@ -56,7 +56,7 @@ public class EventsListFragment extends Fragment {
                     args.putLong(EVENT_ID, event.getId());
                     eventFragment.setArguments(args);
 
-                    getActivity().getFragmentManager().beginTransaction()
+                    getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_fragment_container, eventFragment, event.getName())
                             .addToBackStack(null)
                             .commit();

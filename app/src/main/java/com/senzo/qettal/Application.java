@@ -20,6 +20,12 @@ import com.senzo.amazonaws.mobile.push.PushManager;
 public class Application extends MultiDexApplication {
 
     private final static String LOG_TAG = Application.class.getSimpleName();
+    private static Application application;
+    private static QettalComponent component;
+
+    public static QettalComponent getComponent() {
+        return component;
+    }
 
     @Override
     public void onCreate() {
@@ -27,6 +33,9 @@ public class Application extends MultiDexApplication {
         super.onCreate();
         initializeApplication();
         Log.d(LOG_TAG, "Application.onCreate - Application initialized OK");
+
+        application = this;
+        component = DaggerQettalComponent.builder().qettalModule(new QettalModule()).build();
     }
 
     private void initializeApplication() {
@@ -42,5 +51,9 @@ public class Application extends MultiDexApplication {
         });
 
         // ...Put any application-specific initialization logic here...
+    }
+
+    public static Application getApplication() {
+        return application;
     }
 }

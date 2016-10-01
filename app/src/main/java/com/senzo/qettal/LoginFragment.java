@@ -13,6 +13,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,12 +33,15 @@ public class LoginFragment extends Fragment {
     EditText edtPassword;
     @BindView(R.id.loading_indicator)
     AVLoadingIndicatorView avi;
+    @Inject
+    OkHttpClient client;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
+        Application.getComponent().inject(this);
         return view;
     }
 
@@ -63,7 +68,6 @@ public class LoginFragment extends Fragment {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    OkHttpClient client = RestClient.getClient();
 
                     RequestBody body = new FormBody.Builder()
                             .add("email", email)
