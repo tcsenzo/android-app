@@ -1,4 +1,4 @@
-package com.senzo.qettal;
+package com.senzo.qettal.login;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.senzo.qettal.Application;
+import com.senzo.qettal.MainActivity;
+import com.senzo.qettal.QettalConfiguration;
+import com.senzo.qettal.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.IOException;

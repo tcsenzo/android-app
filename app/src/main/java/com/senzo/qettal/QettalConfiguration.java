@@ -10,6 +10,8 @@ package com.senzo.qettal;
 import android.support.v4.app.Fragment;
 
 import com.senzo.qettal.events.EventsListFragment;
+import com.senzo.qettal.history.HistoryFragment;
+import com.senzo.qettal.login.LoginFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,7 @@ public class QettalConfiguration {
         unloggedFeatures.add(homeFeature);
         unloggedFeatures.add(new QettalFeature("login", R.mipmap.icon_login, R.string.main_nav_menu_item_login, new LoginFragment()));
         loggedFeatures.add(homeFeature);
+        loggedFeatures.add(new QettalFeature("history", R.mipmap.icon_history, R.string.main_nav_menu_item_history, new HistoryFragment()));
     }
 
     public List<QettalFeature> getFeatures() {
@@ -39,15 +42,6 @@ public class QettalConfiguration {
             return Collections.unmodifiableList(unloggedFeatures);    
         }
         return Collections.unmodifiableList(loggedFeatures);
-    }
-
-    public QettalFeature getFeatureByName(final String name) {
-        for (QettalFeature feature : unloggedFeatures) {
-            if (feature.name.equals(name)) {
-                return feature;
-            }
-        }
-        return null;
     }
 
 

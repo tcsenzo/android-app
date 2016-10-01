@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.senzo.qettal.webview.WebViewConfigurer;
 
 import javax.inject.Singleton;
 
@@ -35,5 +36,11 @@ public class QettalModule {
     @Singleton
     QettalConfiguration getConfig(){
         return new QettalConfiguration();
+    }
+
+    @Provides
+    @Singleton
+    WebViewConfigurer getWebViewConfigurer(){
+        return new WebViewConfigurer();
     }
 }

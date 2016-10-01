@@ -65,7 +65,6 @@ public class NavigationDrawer {
                                     final int position, final long id) {
                 QettalConfiguration.QettalFeature item = adapter.getItem(position);
                 final Fragment fragment = item.getFragment();
-
                 activity.getSupportFragmentManager()
                         .beginTransaction()
                         .replace(fragmentContainerId, fragment, item.getName())

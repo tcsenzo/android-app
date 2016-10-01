@@ -9,13 +9,10 @@
 
   <string name="main_nav_menu_item_home">Home</string>
   <string name="main_nav_menu_item_login">Login</string>
-  <string name="title_activity_item_detail">Item Detail</string>
-  <string name="title_activity_item_list">Item List</string>
+  <string name="main_nav_menu_item_history">Histórico</string>
+
   <string name="title_activity_main">@string/app_name</string>
-  <string name="title_activity_sign_in">Sign-in</string>
-  <string name="button_text_sign_in">SIGN IN</string>
-  <string name="button_text_sign_out">SIGN OUT</string>
-  
+
   <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
 
   <string name="main_menu_home_title">Home</string>

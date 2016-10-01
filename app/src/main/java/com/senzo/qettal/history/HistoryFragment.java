@@ -1,4 +1,4 @@
-package com.senzo.qettal.events;
+package com.senzo.qettal.history;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,9 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by leonardo on 16/09/23.
+ * Created by leonardo on 16/10/01.
  */
-public class EventFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     @BindView(R.id.base_webview)
     WebView eventWebView;
@@ -33,9 +33,8 @@ public class EventFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
         ButterKnife.bind(this, view);
         Application.getComponent().inject(this);
-        long eventId = getArguments().getLong(EventsListFragment.EVENT_ID);
         configurer.configure(getActivity(), eventWebView);
-        eventWebView.loadUrl("http://www.qettal.com/evento/"+eventId);
+        eventWebView.loadUrl("http://www.qettal.com/historico");
         return view;
     }
 
