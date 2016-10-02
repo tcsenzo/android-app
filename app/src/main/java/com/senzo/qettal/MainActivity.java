@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private NavigationDrawer navigationDrawer;
     @Inject
     QettalConfiguration config;
+    @Inject
+    QettalCookieManager cookies;
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -117,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ListView drawerItems = (ListView) findViewById(R.id.nav_drawer_items);
 
-        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems, R.id.main_fragment_container);
-        navigationDrawer.replaceFeatures(config);
+        navigationDrawer = new NavigationDrawer(this, toolbar, drawerLayout, drawerItems, R.id.main_fragment_container, cookies, config);
+        navigationDrawer.replaceFeatures();
     }
 
     public NavigationDrawer getNavigation() {

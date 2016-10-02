@@ -56,10 +56,13 @@ public class WebViewConfigurer {
         });
 
         Cookie cookie = cookies.getJSessionId();
+        CookieManager cookieManager = CookieManager.getInstance();
         if(cookie != null){
             String cookieString = "JSESSIONID="+cookie.value();
-            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setCookie("http://www.qettal.com", cookieString);
+        } else {
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
         }
     }
 }

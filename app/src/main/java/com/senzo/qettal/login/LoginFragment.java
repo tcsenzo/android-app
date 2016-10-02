@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import com.senzo.qettal.Application;
 import com.senzo.qettal.MainActivity;
-import com.senzo.qettal.QettalConfiguration;
 import com.senzo.qettal.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -39,8 +38,6 @@ public class LoginFragment extends Fragment {
     AVLoadingIndicatorView avi;
     @Inject
     OkHttpClient client;
-    @Inject
-    QettalConfiguration qettalConfiguration;
 
     @Nullable
     @Override
@@ -69,7 +66,7 @@ public class LoginFragment extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 avi.hide();
                 getFragmentManager().popBackStack();
-                ((MainActivity) getActivity()).getNavigation().replaceFeatures(qettalConfiguration);
+                ((MainActivity) getActivity()).getNavigation().replaceFeatures();
             }
 
             @Override

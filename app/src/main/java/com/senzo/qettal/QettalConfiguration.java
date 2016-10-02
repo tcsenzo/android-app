@@ -35,6 +35,7 @@ public class QettalConfiguration {
         unloggedFeatures.add(new QettalFeature("login", R.mipmap.icon_login, R.string.main_nav_menu_item_login, new LoginFragment()));
         loggedFeatures.add(homeFeature);
         loggedFeatures.add(new QettalFeature("history", R.mipmap.icon_history, R.string.main_nav_menu_item_history, new HistoryFragment()));
+        loggedFeatures.add(new QettalFeature("logout", R.mipmap.icon_logout, R.string.main_nav_menu_item_logout, new EventsListFragment()));
     }
 
     public List<QettalFeature> getFeatures() {

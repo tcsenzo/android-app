@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.senzo.qettal.QettalConfiguration;
+import com.senzo.qettal.QettalCookieManager;
 import com.senzo.qettal.R;
+
+import java.util.Arrays;
 
 public class NavigationDrawer {
     private AppCompatActivity containingActivity;
@@ -29,6 +32,7 @@ public class NavigationDrawer {
 
     /** The id of the fragment container. */
     private int fragmentContainerId;
+    private QettalConfiguration qettalConfiguration;
 
     /**
      * Constructs the Navigation Drawer.
@@ -41,7 +45,10 @@ public class NavigationDrawer {
                             final Toolbar toolbar,
                             final DrawerLayout layout,
                             final ListView drawerItemsContainer,
-                            final int fragmentContainerId) {
+                            final int fragmentContainerId,
+                            final QettalCookieManager cookies,
+                            final QettalConfiguration qettalConfiguration) {
+        this.qettalConfiguration = qettalConfiguration;
         this.containingActivity = activity;
         this.drawerItems = drawerItemsContainer;
         adapter = new ArrayAdapter<QettalConfiguration.QettalFeature>(activity, com.senzo.qettal.R.layout.nav_drawer_item) {
@@ -64,6 +71,10 @@ public class NavigationDrawer {
             public void onItemClick(final AdapterView<?> parent, final View view,
                                     final int position, final long id) {
                 QettalConfiguration.QettalFeature item = adapter.getItem(position);
+                if(item.getName().equals("logout")){
+                    cookies.clear();
+                    replaceFeatures();
+                }
                 final Fragment fragment = item.getFragment();
                 activity.getSupportFragmentManager()
                         .beginTransaction()
@@ -84,7 +95,7 @@ public class NavigationDrawer {
 
     }
 
-    public void replaceFeatures(QettalConfiguration qettalConfiguration){
+    public void replaceFeatures(){
         adapter.clear();
         adapter.addAll(qettalConfiguration.getFeatures());
         adapter.notifyDataSetChanged();
